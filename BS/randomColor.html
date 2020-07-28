@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random</title>
+  <style>
+    #box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%)
+    }
+
+    #content {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto 10px;
+      background: #000000;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <div id="content"></div>
+    <button id="randomColor">随机颜色</button>
+    <button id="randomSize">随机尺寸</button>
+    <button id="beginAnimate">开始动画</button>
+  </div>
+
+  <script>
+    const RandomColor = document.getElementById('randomColor'),
+      RandomSize = document.getElementById('randomSize'),
+      BeginAnimate = document.getElementById('beginAnimate'),
+      ContentBox = document.getElementById('content');
+    // 随机函数
+    const randomNum = (min) => {
+      return (max)=> {
+        return Math.floor(Math.random() * (max-min + 1) + min)
+      }
+    }
+    // 随机色
+    const randomC = () => {
+      const r = randomNum(0)(255);
+      const g = randomNum(0)(255);
+      const b = randomNum(0)(255);
+      ContentBox.style.background = `rgb(${r}, ${g}, ${b})`
+    }
+    // 随机尺寸
+    const randomS = () => {
+      const w = randomNum(10)(500);
+      const h = randomNum(10)(500);
+      ContentBox.style.height = `${h}px`;
+      ContentBox.style.width = `${w}px`;
+    }
+    // 执行动画
+    BeginAnimate.onclick = function() {
+      setInterval(()=> {
+        randomC();
+        randomS();
+      }, 500)
+    }
+    RandomSize.onclick = function() { randomS() }
+    RandomColor.onclick = function() { randomC() }
+  </script>
+</body>
+</html>
