@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MVVM双向绑定</title>
+</head>
+<body>
+  <input type="text" id="inputValue">
+  <div id="divText"></div>
+
+  <script>
+    let user = {},
+      model = document.getElementById('inputValue'),
+      modelText = document.getElementById('divText');
+
+    Object.defineProperty(user, 'name', {
+      set(_val) {
+        // defaultValue = _val;
+        model.value = _val;
+        modelText.innerHTML = _val;
+      }
+    });
+
+    model.addEventListener('keyup', function(e) {
+      user.name = this.value
+    }, false)
+
+  </script>
+</body>
+</html>
