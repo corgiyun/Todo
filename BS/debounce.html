@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Debounce</title>
+</head>
+<body>
+  <input type="text" id="inp">
+
+  <script>
+    function debounce(fn, delay) {
+      let timeout = null;
+      return function() {
+        timeout && clearTimeout(timeout);
+        timeout = setTimeout(()=> {
+          fn.apply(this, arguments)
+        }, delay)
+      }
+    }
+    function sayHi() {
+      console.log('防抖+++');
+    }
+    const inp = document.getElementById('inp');
+    inp.addEventListener('keyup', debounce(sayHi, 500), false)
+  </script>
+
+</body>
+</html>

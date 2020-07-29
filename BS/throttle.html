@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Throttle</title>
+</head>
+<body>
+
+  <script>
+    function throttle(fn, delay) {
+      let canRun = true; // 通过闭包保存一个标记
+      return function() {
+        if(!canRun) return; // 判断是否可执行
+        canRun = false; // 执行后设置为 false
+        setTimeout(()=> {
+          fn.apply(this, arguments);
+          canRun = true;
+        }, delay)
+      }
+    }
+    function sayHi(e) {
+      console.log(e.target.innerWidth, e.target.innerHeight);
+    }
+    window.addEventListener('resize', throttle(sayHi, 500), false)
+  </script>
+
+</body>
+</html>
