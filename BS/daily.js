@@ -58,5 +58,21 @@
   let arr = [123, {a: 1}, {a: {b: 1}}, {a: '1'}, {a: {b: '1'}}, ',meiLi'];
   const parseArr = (arr) => [...new Set(arr.map(JSON.stringify))].map(JSON.parse);
 
-  console.log(parseArr(arr));
+  // console.log(parseArr(arr));
+}
+
+{
+  // 移动数组元素到末尾
+  const arr = [0, 0, 1, 0, 2, 0, 3];
+  const moveArr = (arr, ele) => {
+    const len = arr.length;
+    for(let i = 0; i < len; i++) {
+      if(arr[i] == ele) {
+        arr.splice(i, 1);
+        arr.push(ele)
+      }
+    }
+    return arr;
+  };
+  console.log(moveArr(arr, 0));
 }
