@@ -74,5 +74,42 @@
     }
     return arr;
   };
-  console.log(moveArr(arr, 0));
+  // console.log(moveArr(arr, 0));
+}
+
+{
+  const data = [
+    {
+      name: '张三',
+      id: 1,
+      tel: 13333333333
+    },
+    {
+      name: '李四',
+      id: 2,
+      tel: 15565656565
+    },
+    {
+      name: '王五',
+      id: 3,
+      tel: 17777777777
+    },
+    {
+      name: '郭六',
+      id: 4,
+      tel: 18888888888
+    },
+  ];
+
+  const parseData = (arr) => {
+    let result = {}
+    arr.map(item=> {
+      for(const key in item) {
+        result[key] || (result[key] = []);
+        result[key].push(item[key])
+      }
+    })
+    return result;
+  }
+  console.log(parseData(data));
 }
