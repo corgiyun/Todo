@@ -6,8 +6,9 @@
   <title>Throttle</title>
 </head>
 <body>
-
+  <input type="text" id='inp'>
   <script>
+    //  节流： 高频事件持续触发，但在n秒内只会执行一次，直到事件执行完成后才能重新触发。稀释函数的执行频率
     function throttle(fn, delay) {
       let canRun = true; // 通过闭包保存一个标记
       return function() {
@@ -20,9 +21,11 @@
       }
     }
     function sayHi(e) {
-      console.log(e.target.innerWidth, e.target.innerHeight);
+      console.log('节流+++');
     }
-    window.addEventListener('resize', throttle(sayHi, 500), false)
+    const inp = document.getElementById('inp');
+    inp.addEventListener('input', throttle(sayHi, 1000), false);
+    // window.addEventListener('resize', throttle(sayHi, 500), false)
   </script>
 
 </body>

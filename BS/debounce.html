@@ -9,6 +9,7 @@
   <input type="text" id="inp">
 
   <script>
+    // 防抖：触发事件后在n秒内函数只执行一次，如果在n秒内事件再次被触发，则重新等待n秒再触发事件
     function debounce(fn, delay) {
       let timeout = null;
       return function() {
@@ -22,7 +23,7 @@
       console.log('防抖+++');
     }
     const inp = document.getElementById('inp');
-    inp.addEventListener('keyup', debounce(sayHi, 500), false)
+    inp.addEventListener('keyup', debounce(sayHi, 1000), false)
   </script>
 
 </body>

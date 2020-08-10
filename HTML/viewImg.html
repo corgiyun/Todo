@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片查看</title>
+  <style>
+    #box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, .3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #img {
+      width: 500px;
+      height: 200px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <img src="../images/car.png" alt="" id="img" draggable="false">
+  </div>
+
+  <script>
+      const img = document.getElementById('img');
+      let control = {
+        x: null, 
+        y: null,
+        lastX : 0,
+        lastY: 0,
+        isMoving: false
+      }
+      
+      img.addEventListener('click', e=> e.stopPropagation(), false);
+      img.addEventListener('mousedown', handleMousedown.bind(control), false);
+      document.addEventListener('mousemove', handleMouseMove.bind(control), false)
+      document.addEventListener('mouseup', handleMouseUp.bind(control), false);
+      
+      function handleMousedown(e) {
+        console.log('mousedown')
+        this.isMoving = true
+        this.x = e.clientX
+        this.y = e.clientY
+      };
+
+      function handleMouseMove(e) {
+        if(this.isMoving) {
+            console.log('mouseMove')
+            img.style.transform = `translate(${e.clientX - this.x + this.lastX}px, ${e.clientY - this.y + this.lastY}px)`
+          }
+      };
+
+      function handleMouseUp(e) {
+        console.log('mouseup')
+        this.lastX = e.clientX - this.x + this.lastX
+        this.lastY = e.clientY - this.y + this.lastY
+        this.isMoving = false
+      }
+
+    
+  </script>
+
+
+  <script>
+  
+  let state = {
+    activeIndex: 0, // 当前下标
+    rotate: 0, // 旋转角度
+    scale: 1, // 缩放倍数
+    x: 0,
+    y: 0,
+  };
+  // 关闭
+  onClose = () => {
+    this.props.onClose && this.props.onClose();
+  };
+  // 位移
+  translateX = (direction) => {
+    let { activeIndex } = this.state;
+    const { list } = this.props;
+    let index = 0;
+    if (direction === 'left') {
+      if (activeIndex > 0) {
+        index = activeIndex -= 1;
+      }
+    } else {
+      if (activeIndex < list.length - 1) {
+        index = activeIndex += 1;
+      } else {
+        return;
+      }
+    }
+    this.setState({ activeIndex: index, rotate: 0, scale: 1 });
+    this.refs.imgList.style.transform = `translate3d(-${index * 720}px , 0px, 0px)`;
+  };
+  // 旋转
+  handleRotate = (direction) => {
+    let { rotate, scale, activeIndex } = this.state;
+    let _rotate = 0;
+    if (direction === 'left') {
+      _rotate = rotate += 90;
+    } else {
+      _rotate = rotate -= 90;
+    }
+    this.setState({ rotate: _rotate });
+    this.refs[`imgContainer${activeIndex}`].style.transform = `rotate(${_rotate}deg)`;
+  };
+  // 放大缩小
+  handleScale = (type) => {
+    let { rotate, scale, activeIndex } = this.state;
+    let _scale;
+    if (type === 'bigger') {
+      // if (scale > 1.5) return; // 放大限制
+      _scale = scale += 0.5;
+    } else {
+      // if (scale < 0.5) return; // 缩小限制
+      _scale = scale -= 0.5;
+    }
+    this.setState({ scale: _scale });
+    this.refs[`imgContainer${activeIndex}`].style.transform = `scale(${_scale})`;
+  };
+  // 拖拽图片
+  moveImg = (e) => {
+    let { pageX, pageY } = e;
+    e.preventDefault();
+    const { x, y, activeIndex } = this.state;
+    if (pageX === 0 && pageY === 0) return;
+
+    var disX = pageX - x;
+    var disY = pageY - y;
+    // this.setState({
+    //   x: disX,
+    //   y: disY
+    // })
+
+    this.refs.imgList.style.left = disX + 'px';
+    this.refs.imgList.style.top = disY + 'px';
+  };
+
+  // componentDidMount() {
+  //   const box = document.getElementById('box');
+  //   this.setState({
+  //     x: box.getBoundingClientRect().left,
+  //     y: box.getBoundingClientRect().top,
+  //   });
+  // }
+
+  onmouseupHandle = (e) => {
+    const { x, y } = this.state;
+    // 原因其实是定位和margin作用会叠加在
+    console.log('up');
+    e.preventDefault();
+    const box = document.getElementById('box');
+    box.onmousemove = null;
+    // this.refs.imgList.style.left = e.clientX - x + 'px';
+    // this.refs.imgList.style.top = e.clientY - y + 'px';
+  };
+  // 按下事件
+  onmousedownHandle = (e) => {
+    // e.offsetX 鼠标指针位置相对于触发事件的对象的 x 坐标。
+    // e.offsetY 鼠标指针位置相对于触发事件的对象的 y 坐标。
+    // e.clientX 鼠标指针位置相对于当前窗口的 x 坐标
+    // offsetParent 离元素最近的一个有定位的祖先盒子，如果没有祖先定位盒子则默认位body
+    // box.offsetTop box这元素到offsetParent的顶部(外边框)的距离
+    // 获取鼠标相对于触发事件对象的位置
+    const { x, y } = this.state;
+    e.preventDefault();
+    const box = document.getElementById('box');
+
+    box.onmousemove = function(e) {
+      console.log(e.pageX, e.pageY);
+      // this.setState({
+      //   y: e.pageX,
+      //   x: e.pageY
+      // });
+      box.style.transform = `translate3d(${e.clientX}px , ${e.clientY}px, 0px)`;
+      // box.style.left = e.clientX -x + 'px';
+      // box.style.top = e.clientY - y + 'px';
+    };
+  };
+
+
+
+
+
+
+  </script>
+</body>
+</html>
