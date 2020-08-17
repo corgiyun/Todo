@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <script src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.0/jquery.js"></script>
   <style>
     .box {
       display: flex;
@@ -24,7 +25,7 @@
     <img src="./images/icon1.png" alt="" class="img">
     <button id="postBtn">更换海报</button>
 
-    <img src="http://common-static.souche.com/picture/BA52DEB1-B53C-4F9B-AB12-ED26D494F02B.jpg" alt="">
+    <!-- <img src="http://common-static.souche.com/picture/BA52DEB1-B53C-4F9B-AB12-ED26D494F02B.jpg" alt=""> -->
   </div>
 
   <script>
@@ -84,6 +85,13 @@
         }
     }
     // wx.miniProgram.postMessage({ data: JSON.stringify('postData') });
+  </script>
+
+  <script>
+      const arr = Array(4).fill(1)
+      console.log(arr);
+      const total = (arr) => arr.reduce((acc, cur) => acc + acc * cur, 2)
+      console.log(total(arr));
   </script>
 </body>
 </html>
