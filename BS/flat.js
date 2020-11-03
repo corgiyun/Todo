@@ -11,5 +11,18 @@ const arr = [1, [2, [3, ['a'], 'b'], 'c'], 'd'];
 {
   // 2. ES5 reduce + 递归
   const flattenDeep = (arr) => arr.reduce((acc, val)=> Array.isArray(val)? acc.concat(flattenDeep(val)) : acc.concat(val), []);
-  console.log(flattenDeep(arr));
+  // console.log(flattenDeep(arr));
+}
+
+{
+  // 3. for 循环 + 递归
+  const flatDeep = (arr) => {
+    const result = [];
+    arr.forEach(item=> {
+      Array.isArray(item) ? result.push(...flatDeep(item)) : result.push(item)
+    });
+    return result
+  }
+  console.log(flatDeep(arr))
+
 }
